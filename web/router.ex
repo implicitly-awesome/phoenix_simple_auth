@@ -14,13 +14,10 @@ defmodule SimpleAuth.Router do
   end
 
   scope "/", SimpleAuth do
-    pipe_through :browser # Use the default browser stack
+    pipe_through :browser
 
     get "/", PageController, :index
-  end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", SimpleAuth do
-  #   pipe_through :api
-  # end
+    resources "/users", UserController, only: [:show, :new, :create]
+  end
 end
