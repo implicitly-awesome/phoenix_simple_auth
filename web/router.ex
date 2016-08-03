@@ -32,23 +32,23 @@ defmodule SimpleAuth.Router do
     resources "/sessions", SessionController, only: [:new, :create, :delete]
 
     resources "/users", UserController, only: [:new, :create]
-  end
 
-  # registered user zone
-  scope "/", SimpleAuth do
-    pipe_through [:browser, :with_session, :login_required]
+    # registered user zone
+    scope "/" do
+      pipe_through [:login_required]
 
-    resources "/users", UserController, only: [:show] do
-      resources "/posts", PostController
-    end
-  end
+      resources "/users", UserController, only: [:show] do
+        resources "/posts", PostController
+      end
 
-  # admin zone
-  scope "/admin", SimpleAuth do
-    pipe_through [:browser, :with_session, :login_required, :admin_required]
+      # admin zone
+      scope "/admin", Admin, as: :admin do
+        pipe_through [:admin_required]
 
-    resources "/users", UserController, only: [:index, :show] do
-      resources "/posts", PostController, only: [:index, :show]
+        resources "/users", UserController, only: [:index, :show] do
+          resources "/posts", PostController, only: [:index, :show]
+        end
+      end
     end
   end
 end

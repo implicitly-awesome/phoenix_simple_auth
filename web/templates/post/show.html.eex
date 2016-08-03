@@ -4,14 +4,24 @@
 
 <p><%= @post.body %></p>
 
-<%= if @current_user && @current_user.id == @user.id do %>
-  <span>
-    <%= link "Edit", to: user_post_path(@conn, :edit, @current_user, @post),
-                     class: "btn btn-primary btn-xs" %>
-    &nbsp;
-    <%= link "Delete", to: user_post_path(@conn, :delete, @current_user, @post),
-                    method: :delete,
-                    data: [confirm: "Really?"],
-                    class: "btn btn-danger btn-xs"%>
-  </span>
+<%= if @current_user do %>
+  <%= if @current_user.id == @user.id do %>
+    <span>
+      <%= link "Edit", to: user_post_path(@conn, :edit, @current_user, @post),
+                       class: "btn btn-primary btn-xs" %>
+      &nbsp;
+      <%= link "Delete", to: user_post_path(@conn, :delete, @current_user, @post),
+                         method: :delete,
+                         data: [confirm: "Really?"],
+                         class: "btn btn-danger btn-xs"%>
+    </span>
+  <% end %>
+  <%= if @current_user.is_admin do %>
+    <span>
+      <%= link "Delete", to: user_post_path(@conn, :delete, @post.user, @post),
+                         method: :delete,
+                         data: [confirm: "Really?"],
+                         class: "btn btn-danger btn-xs"%>
+    </span>
+  <% end %>
 <% end %>
