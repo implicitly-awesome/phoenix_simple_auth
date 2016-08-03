@@ -1,0 +1,24 @@
+<h1>Edit post</h1>
+
+<%= form_for @changeset, user_post_path(@conn, :update, @current_user, @post), fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>There are some errors</p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= text_input f, :title, placeholder: "Title", class: "form-control" %>
+    <%= error_tag f, :title %>
+  </div>
+  <div class="form-group">
+    <%= textarea f, :body, placeholder: "Body", class: "form-control" %>
+    <%= error_tag f, :body %>
+  </div>
+
+  <span>
+    <%= submit "Edit", class: "btn btn-primary" %>
+    &nbsp;
+    <%= link "Cancel", to: user_post_path(@conn, :show, @current_user, @post) %>
+  </span>
+<% end %>

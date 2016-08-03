@@ -15,17 +15,40 @@ defmodule SimpleAuth.Router do
     plug SimpleAuth.CurrentUser
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
+  pipeline :login_required do
+    plug Guardian.Plug.EnsureAuthenticated,
+         handler: SimpleAuth.GuardianErrorHandler
   end
 
+  pipeline :admin_required do
+  end
+
+  # guest zone
   scope "/", SimpleAuth do
     pipe_through [:browser, :with_session]
 
     get "/", PageController, :index
 
-    resources "/users", UserController, only: [:show, :new, :create]
-
     resources "/sessions", SessionController, only: [:new, :create, :delete]
+
+    resources "/users", UserController, only: [:new, :create]
+  end
+
+  # registered user zone
+  scope "/", SimpleAuth do
+    pipe_through [:browser, :with_session, :login_required]
+
+    resources "/users", UserController, only: [:show] do
+      resources "/posts", PostController
+    end
+  end
+
+  # admin zone
+  scope "/admin", SimpleAuth do
+    pipe_through [:browser, :with_session, :login_required, :admin_required]
+
+    resources "/users", UserController, only: [:index, :show] do
+      resources "/posts", PostController, only: [:index, :show]
+    end
   end
 end

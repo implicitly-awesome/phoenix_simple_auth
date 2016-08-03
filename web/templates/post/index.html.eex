@@ -1,0 +1,12 @@
+<%= if @current_user && @current_user.id == @user.id do %>
+  <h1>My Posts</h1>
+  <%= link "Create new", to: user_post_path(@conn, :new, @current_user) %>
+<% else %>
+  <h1><%= @user.name %>'s Posts</h1>
+<% end %>
+
+<ul>
+  <%= for post <- @posts do %>
+    <li><%= link post.title, to: user_post_path(@conn, :show, post.user, post) %></li>
+  <% end %>
+</ul>
