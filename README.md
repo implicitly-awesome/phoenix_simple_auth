@@ -1,6 +1,6 @@
 # SimpleAuth
 
-Codebase for my tutorial-like article.
+Codebase for my tutorial-like [article](http://bit.ly/2aQsWYF)
 
 (Simple Phoenix project's authentication/authorization implementation
  based on Guardian, plugs & pipelines)
