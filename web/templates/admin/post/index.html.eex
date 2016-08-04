@@ -1,0 +1,9 @@
+<h1>Posts List</h1>
+
+<ul>
+  <%= for post <- @posts do %>
+    <li>
+      <%= link post.title, to: admin_user_post_path(@conn, :show, @user, post) %>
+    </li>
+  <% end %>
+</ul>

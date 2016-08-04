@@ -1,0 +1,9 @@
+<h1><%= @post.title %></h1>
+
+<h5>(by <%= @user.name %>)</h5>
+
+<p>
+  <%= @post.body %>
+</p>
+
+<%= link "To List", to: admin_user_post_path(@conn, :index, @user) %>

@@ -1,0 +1,9 @@
+<h1>Users List</h1>
+
+<ul>
+  <%= for user <- @users do %>
+    <li>
+      <%= link user.email, to: admin_user_path(@conn, :show, user) %>
+    </li>
+  <% end %>
+</ul>

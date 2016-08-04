@@ -1,0 +1,12 @@
+<h1><%= @user.name %></h1>
+
+<ul>
+  <li><%= @user.name %></li>
+  <li><%= @user.email %></li>
+</ul>
+
+<span>
+  <%= link "Posts", to: admin_user_post_path(@conn, :index, @user) %>
+  &nbsp;
+  <%= link "To list", to: admin_user_path(@conn, :index) %>
+</span>

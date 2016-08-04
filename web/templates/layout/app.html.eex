@@ -22,6 +22,9 @@
             <li>
               <%= link "My posts", to: user_post_path(@conn, :index, @current_user) %>
             </li>
+            <%= if @current_user.is_admin do %>
+              <li><%= link "Users", to: admin_user_path(@conn, :index) %></li>
+            <% end %>
             <li>
               <%= link "Sign out", to: session_path(@conn, :delete, @current_user),
                                    method: "delete" %>
